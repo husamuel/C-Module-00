@@ -1,9 +1,9 @@
-
 #ifndef PHONEBOOK_HPP
 
 # define PHONEBOOK_HPP
 
 #include "Contact.hpp"
+#include <sstream>
 
 class	Phonebook
 {
@@ -16,7 +16,6 @@ class	Phonebook
 		void	add(void);
 		void	search(void);
 		void	print(Contact contact);
-		/* Getters */
 		Contact	get_contact(int index);
 };
 

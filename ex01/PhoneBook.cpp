@@ -39,9 +39,9 @@ void	Phonebook::add(void)
 	_index = (_index + 1) % 8;
 }
 
-void	Phonebook::search(void)
+void Phonebook::search(void)
 {
-	int i = 1;
+	int i = 0;
 
 	std::cout << " ___________________________________________ " << std::endl;
 	std::cout << "|     Index|First Name| Last Name|  Nickname|" << std::endl;
@@ -51,10 +51,14 @@ void	Phonebook::search(void)
 	{
 		if (!_contacts[i].get_fname().empty())
 		{
-			std::cout << "| " << std::setw(9) << i
-					  << std::setw(9) << _contacts[i].get_fname()
-					  << std::setw(9) << _contacts[i].get_lname()
-					  << std::setw(9) << _contacts[i].get_nick()
+			std::cout << "|"
+					  << std::setw(10) << i
+					  << "|"
+					  << std::setw(10) << _contacts[i].get_fname()
+					  << "|"
+					  << std::setw(10) << _contacts[i].get_lname()
+					  << "|"
+					  << std::setw(10) << _contacts[i].get_nick()
 					  << "|" << std::endl;
 		}
 		i++;
@@ -62,27 +66,35 @@ void	Phonebook::search(void)
 
 	std::cout << " ___________________________________________ " << std::endl;
 	std::cout << "Enter the index of the contact to view details: ";
+
 	std::string index_str;
 	std::getline(std::cin, index_str);
 
-		int index = std::stoi(index_str);
-		if (index >= 0 && index < 8 && !_contacts[index].get_fname().empty())
-		{
-			std::cout << "Details for contact at index " << index << ":" << std::endl;
-			std::cout << "First Name: " << _contacts[index].get_fname() << std::endl;
-			std::cout << "Last Name: " << _contacts[index].get_lname() << std::endl;
-			std::cout << "Nickname: " << _contacts[index].get_nick() << std::endl;
-			std::cout << "Phone Number: " << _contacts[index].get_phone_num() << std::endl;
-			std::cout << "Secret: " << _contacts[index].get_secret() << std::endl;
-		}
-		else
-		{
-			std::cout << "Invalid index or no contact at this index." << std::endl;
-		}
+	std::stringstream ss(index_str);
+	int index;
+	if (!(ss >> index)) {
+		std::cout << "Invalid input for index." << std::endl;
+		return;
+	}
+
+	if (index >= 0 && index < 8 && !_contacts[index].get_fname().empty())
+	{
+		std::cout << "Details for contact at index " << index << ":" << std::endl;
+		std::cout << "First Name: " << _contacts[index].get_fname() << std::endl;
+		std::cout << "Last Name: " << _contacts[index].get_lname() << std::endl;
+		std::cout << "Nickname: " << _contacts[index].get_nick() << std::endl;
+		std::cout << "Phone Number: " << _contacts[index].get_phone_num() << std::endl;
+		std::cout << "Secret: " << _contacts[index].get_secret() << std::endl;
+	}
+	else
+	{
+		std::cout << "Invalid index or no contact at this index." << std::endl;
+	}
 }
 
 void	Phonebook::print(Contact Contact)
 {
+	(void)Contact;
 	std::cout << " ___________________________________________ " << std::endl;
 	std::cout << "|     Index|First Name| Last Name|  Nickname|" << std::endl;
 	std::cout << "|----------|----------|----------|----------|" << std::endl;
