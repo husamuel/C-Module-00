@@ -11,6 +11,14 @@ Phonebook::~Phonebook(void)
 	std::cout << "Phonebook is removed" << std::endl;
 }
 
+std::string format_column(std::string str)
+{	
+	if (str.length() > 10)
+		return str.substr(0, 9) + ".";
+	else
+		return std::string(10 - str.length(), ' ') + str;
+}
+
 void	Phonebook::add(void)
 {
 	std::string first_name, last_name, nick, phone_num, secret;
@@ -52,17 +60,18 @@ void Phonebook::search(void)
 		if (!_contacts[i].get_fname().empty())
 		{
 			std::cout << "|"
-					  << std::setw(10) << i
-					  << "|"
-					  << std::setw(10) << _contacts[i].get_fname()
-					  << "|"
-					  << std::setw(10) << _contacts[i].get_lname()
-					  << "|"
-					  << std::setw(10) << _contacts[i].get_nick()
-					  << "|" << std::endl;
+					<< std::setw(10) << i
+					<< "|"
+					<< format_column(_contacts[i].get_fname())
+					<< "|"
+					<< format_column(_contacts[i].get_lname())
+					<< "|"
+					<< format_column(_contacts[i].get_nick())
+					<< "|" << std::endl;
 		}
 		i++;
 	}
+
 
 	std::cout << " ___________________________________________ " << std::endl;
 	std::cout << "Enter the index of the contact to view details: ";
@@ -90,18 +99,4 @@ void Phonebook::search(void)
 	{
 		std::cout << "Invalid index or no contact at this index." << std::endl;
 	}
-}
-
-void	Phonebook::print(Contact Contact)
-{
-	(void)Contact;
-	std::cout << " ___________________________________________ " << std::endl;
-	std::cout << "|     Index|First Name| Last Name|  Nickname|" << std::endl;
-	std::cout << "|----------|----------|----------|----------|" << std::endl;
-
-}
-
-Contact Phonebook::get_contact(int index)
-{
-	return (this->_contacts[index]);
 }

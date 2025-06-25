@@ -4,7 +4,7 @@ int main(void)
 {
 	Phonebook 	ph1;
 	std::string	str;
-
+	
 	while (str != "EXIT")
 	{
 		std::cout << "Enter a command > ";
