@@ -19,9 +19,14 @@ std::string format_column(std::string str)
 		return std::string(10 - str.length(), ' ') + str;
 }
 
-void	Phonebook::add(void)
+bool valid_input(const std::string& str)
 {
-	std::string first_name, last_name, nick, phone_num, secret;
+    return !str.empty() && str.find_first_not_of(" \t\n\r\f\v") != std::string::npos;
+}
+
+void Phonebook::add(void)
+{
+    std::string first_name, last_name, nick, phone_num, secret;
 
     std::cout << "Enter first name: ";
     std::getline(std::cin, first_name);
@@ -29,22 +34,32 @@ void	Phonebook::add(void)
     std::cout << "Enter last name: ";
     std::getline(std::cin, last_name);
 
-	std::cout << "Enter nick name: ";
+    std::cout << "Enter nick name: ";
     std::getline(std::cin, nick);
 
-	std::cout << "Enter phone number: ";
+    std::cout << "Enter phone number: ";
     std::getline(std::cin, phone_num);
 
-	std::cout << "Enter a secret: ";
+    std::cout << "Enter a secret: ";
     std::getline(std::cin, secret);
 
-	_contacts[_index].set_fname(first_name);
+    if (!valid_input(first_name) ||
+        !valid_input(last_name) ||
+        !valid_input(nick) ||
+        !valid_input(phone_num) ||
+        !valid_input(secret))
+    {
+        std::cout << "Error: No field can be empty or contain only whitespace. Contact not added." << std::endl;
+        return;
+    }
+
+    _contacts[_index].set_fname(first_name);
     _contacts[_index].set_lname(last_name);
     _contacts[_index].set_nick(nick);
     _contacts[_index].set_phone_num(phone_num);
     _contacts[_index].set_secret(secret);
 
-	_index = (_index + 1) % 8;
+    _index = (_index + 1) % 8;
 }
 
 void Phonebook::search(void)
@@ -54,6 +69,7 @@ void Phonebook::search(void)
 	std::cout << " ___________________________________________ " << std::endl;
 	std::cout << "|     Index|First Name| Last Name|  Nickname|" << std::endl;
 	std::cout << "|----------|----------|----------|----------|" << std::endl;
+
 
 	while (i < 8)
 	{
@@ -71,7 +87,6 @@ void Phonebook::search(void)
 		}
 		i++;
 	}
-
 
 	std::cout << " ___________________________________________ " << std::endl;
 	std::cout << "Enter the index of the contact to view details: ";
